@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+
+#Autor: María Navarro Velasco
+#Descripción: Busca archivos duplicados en el directorio introducido.
+#Entrada: Modo CHECK o DELETE y el directorio.
+#Salida: 1 si el directorio no existe, 0 si ha sido borrado con exito el archivo.
+
 f_borrar_duplicados() {
     dir="$1"
     modo="$2"
