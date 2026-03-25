@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-#Autor: 
-#Descripción: 
-#Versión: 
+#Descripción: Indica si un paquete está instalado o no.
+#Entrada: Paquete.
+#Salida: 1 si no está, 0 si lo encuentra.
 
 f_paquetes_instalados() {
 dpkg -l "$1" &>/dev/null
