@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+
+#Autor:María Navarro Velasco
 #Descripción: Muestra por pantalla los 10 comandos más usados de la shell. 
 #Entrada: Ninguna
 #Salida: Histórico de shell
