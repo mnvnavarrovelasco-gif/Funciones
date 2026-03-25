@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+#Autor:María Navarro Velasco
 #Descripción: Comprueba si se han añadido parámetros.
 #Entrada: Función con o sin parámetros.
 #Salida: Devuelve 1 si no hay argumentos.
