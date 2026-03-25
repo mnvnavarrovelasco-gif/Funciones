@@ -3,7 +3,7 @@
 #Nombre:f_paquete_disponible
 #Descripción: Busca el paquete en cuestión y nos dice si está disponible
 #             en source.list.
-#Entrada: El nomrbe del paquete.
+#Entrada: El nombre del paquete.
 #Salida: Si está disponible.
 f_paquete_disponible() {
     local pkg="$1"
