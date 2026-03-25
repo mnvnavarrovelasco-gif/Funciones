@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-#Autor: 
-#Descripción: 
-#Versión: 
-
+#Descripción: Comprueba si coinciden el hash introducido con el del archivo. 
+#Entrada: ruta del archivo y el hash.
+#Salida: 0 si está bien, 1 si no coincide.
 
 function f_verificar_hash() {
 
