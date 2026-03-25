@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#Nombre:f_paquete_disponible
+#Autor:María Navarro Velasco
 #Descripción: Busca el paquete en cuestión y nos dice si está disponible
 #             en source.list.
 #Entrada: El nombre del paquete.
