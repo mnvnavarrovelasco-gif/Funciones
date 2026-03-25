@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+#Autor: 
+#Descripción: 
+#Versión: 
+
+f_uid() {
+    echo $(id -u)
+}
+f_uid
