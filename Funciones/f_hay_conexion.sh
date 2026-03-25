@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+#Autor:María Navarro Velasco
 #Descripción: Muestra si hay conexión.
 #ENtrada: Ninguna.
 #Salida: 0 si hay, 1 si no.
