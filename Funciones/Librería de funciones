@@ -1,0 +1,375 @@
+-----===== LIBRERÍA DE SCRIPTS =====-----
+
+---------------------------------------------------------
+RANKING DE COMANDOS
+#!/usr/bin/env bash
+
+#Autor:María Navarro Velasco
+#Descripción: Muestra por pantalla los 10 comandos más usados de la shell. 
+#Entrada: Ninguna
+#Salida: Histórico de shell
+f_ranking_comandos() {
+cat ~/.bash_history | awk '{print $1}' | sort | uniq -c | sort -nr | head -10
+return 0
+}
+f_ranking_comandos 
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+UID
+#!/usr/bin/env bash
+
+#Autor:María Navarro Velasco
+#Descripción: Muestra la id del usuario actual 
+#Entrada: Ninguna.
+#Salida la UID.
+
+f_uid() {
+    echo $(id -u)
+}
+f_uid
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+PARÁMETROS
+#!/usr/bin/env bash
+
+#Autor:María Navarro Velasco
+#Descripción: Comprueba si se han añadido parámetros.
+#Entrada: Función con o sin parámetros.
+#Salida: Devuelve 1 si no hay argumentos.
+
+f_parametros() {
+  if [ $# -eq 0 ]; then
+	echo "Error"
+	return 1
+  fi
+}
+f_parametros "$@"
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+BINARIO INSTALADO
+#!/usr/bin/env bash
+
+#Autor: María Navarro Velasco
+#Descripción: COmprueba si un binario está instalado.
+#Entrada: el binario.
+#Salida: 0 si está, 1 si no.
+
+
+f_bin_instalado() { 
+if command -v "$1" > /dev/null 2>&1; then 
+   return 0
+else 
+   return 1
+fi
+}
+f_bin_instalado "$1"
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+HAY CONEXIÓN
+#!/usr/bin/env bash
+
+#Autor:María Navarro Velasco
+#Descripción: Muestra si hay conexión.
+#ENtrada: Ninguna.
+#Salida: 0 si hay, 1 si no.
+
+
+f_hay_conexion()
+{
+  if ping -c 1 -q 0.0.0.0; then
+        return 0
+
+  else
+        return 1
+  fi
+}
+f_hay_conexion
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+ERES ROOT
+#!/usr/bin/env bash
+
+#Autor: María Navarro Velasco
+#Descripción: Comprueba si el usuario es o no root
+#Entrada: ninguna.
+#Salida: 0 si eres root, 1 si no. 
+
+f_eres_root() {
+    if [ "$(id -u)" -eq 0 ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+f_eres_root
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+PAQUETES DISPONIBLES
+#!/usr/bin/env bash
+
+#Autor:María Navarro Velasco
+#Descripción: Busca el paquete en cuestión y nos dice si está disponible
+#             en source.list.
+#Entrada: El nombre del paquete.
+#Salida: Si está disponible.
+f_paquete_disponible() {
+    local pkg="$1"
+
+    if [ -z "$pkg" ]; then
+        return 1
+    fi
+
+
+    if apt-cache show "$pkg" >/dev/null 2>&1; then
+
+        return 0
+
+    else
+        return 1
+    fi
+}
+f_paquete_disponible "$1"
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+PAQUETE INSTALADO
+#!/usr/bin/env bash
+
+#Autor:María Navarro Velasco
+#Descripción: Indica si un paquete está instalado o no.
+#Entrada: Paquete.
+#Salida: 1 si no está, 0 si lo encuentra.
+
+f_paquetes_instalados() {
+dpkg -l "$1" &>/dev/null
+}
+
+f_paquetes_instalados $1
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+BUSCAR PAQUETE
+#!/usr/bin/env bash
+
+#Autor: María Navarro Velasco
+#Descripción: Busca el paquete del binario introducido.
+#Entrada: EL binario.
+#Salida: El paquete.
+
+f_buscar_paquete() {
+dpkg -S $(which $1 2>/dev/null) 2>/dev/null | cut -d: -f1
+}
+f_buscar_paquete "$1"
+---------------------------------------------------------
+
+
+[ FUNCIONES DE AMPLIACIÓN ]
+
+---------------------------------------------------------
+ESPACIO LIBRE
+#!/usr/bin/env bash
+
+#Autor:María Navarro Velasco
+#Descripción:Introduces el espacio que necesitas tener y el punto de montaje en cuestión y te devuelve un 0 si hay y un 1 si no.
+#Versión: 
+#Entrada:Punto de montaje y porcentaje de espacio minimo. 
+#Salida:0 si hay espacio, 1 si no.
+
+function f_espacio_libre() {
+ espacio_usado=$(df -h "$1" 2>/dev/null | tail -1 | awk '{print $5}' | sed 's/%//');
+ espacio_disponible=$((100 - espacio_usado))
+
+ if [ -z "$espacio_usado" ]; then
+  echo "Error: Punto de montaje '$1' no existe"; 
+  return 1
+ fi
+
+ if [ $espacio_disponible -ge ${2:-10} ]; then
+  return 0;
+ else
+  return 1;
+ fi
+
+}
+
+f_espacio_libre "$1" "$2"
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+PUERTO ABIERTO
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+ES IP VALIDA
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+LOG
+#!/usr/bin/env bash
+
+#Autor:María Navarro Velasco
+#Descripción: Registra un evento en un archivo de log cronológico.
+#Entrada: Mensaje de texto a registrar.
+#Salida: Si se ha registrado o no.
+
+f_log() {
+    mensaje="$1"
+    fichero="${2:-/var/log/sysadmin.log}"
+    fecha=$(date "+%Y-%m-%d %H:%M:%S")
+    echo "[$fecha] $mensaje" >> "$fichero" 2>/dev/null
+}
+
+f_log "$1" "$2"
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+VERIFICAR HASH
+#!/usr/bin/env bash
+
+#Autor:María Navarro Velasco
+#Descripción: Comprueba si coinciden el hash introducido con el del archivo. 
+#Entrada: ruta del archivo y el hash.
+#Salida: 0 si está bien, 1 si no coincide.
+
+function f_verificar_hash() {
+
+hash=$(md5sum $1 | awk '{print $1}')
+  if [ "$hash" = "$2" ]; then 
+	return 0
+  else 
+	return 1
+  fi
+}
+f_verificar_hash $1 $2 
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+LIMPIAR TEMPORALES
+#!/usr/bin/env bash
+
+#Autor:María Navarro Velasco
+#Descripción: Borra archivos antiguos en un directorio específico.
+# Entrada:
+ # $1: Ruta del directorio.
+ # $2: Antigüedad en días (ej: 7 para borrar archivos de más de una semana).
+# Devuelve:
+ # 0: Limpieza realizada.
+ # 1: Directorio no encontrado.
+#Como usar:
+#  0	Hoy (desde medianoche)	bash f_limpiar_temporales.sh /tmp 0
+#  1	Ayer y anteriores	bash f_limpiar_temporales.sh /tmp 1
+# +1	Más de 1 día	bash f_limpiar_temporales.sh /tmp +1
+# -1	Últimas 24h	bash f_limpiar_temporales.sh /tmp -1
+
+f_limpiar_temporales() {
+    dir="$1"
+    dias="$2"
+
+    # Verificar si el directorio existe
+    if [ ! -d "$1" ]; then
+        return 1
+    fi
+
+    # Borrar archivos más antiguos que los días indicados
+    find "$1" -type f -mtime +"$2" -exec rm -f {} \;
+
+    return 0
+}
+f_limpiar_temporales $1 $2
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+BORRAR DUPLICADOS
+#!/usr/bin/env bash
+
+#Autor: María Navarro Velasco
+#Descripción: Busca archivos duplicados en el directorio introducido.
+#Entrada: Modo CHECK o DELETE y el directorio.
+#Salida: 1 si el directorio no existe, 0 si ha sido borrado con exito el archivo.
+
+f_borrar_duplicados() {
+    dir="$1"
+    modo="$2"
+
+    if [[ ! -d "$dir" ]]; then
+        echo "Error: directorio no existe."
+        return 1
+    fi
+
+    tmp=$(mktemp)
+
+    find "$dir" -type f | while read file; do
+        hash=$(md5sum "$file" | awk '{print $1}')
+        if  grep -q "$hash" "$tmp"; then
+            if [[ "$modo" == "CHECK" ]]; then
+                echo "Archivo duplicado: $file"
+            elif [[ "$modo" == "DELETE" ]]; then
+                rm "$file"
+                echo "Archivo eliminado: $file"
+            fi
+        else
+            echo "$hash" >> "$tmp"
+        fi
+    done
+
+    rm "$tmp"
+    return 0
+}
+f_borrar_duplicados $1 $2
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+GENERAR LOGINS UNIVERSALES
+#!/usr/bin/env bash
+
+# Descripción: Genera identificadores en minúsculas procesando nombres y apellidos. Compatible con /bin>
+# Entrada: $1: Fichero origen (CSV delimitado por ;).  $2: Fichero destino
+# Salida: 
+
+function f_generar_logins_universal() {
+
+    origen="$1"
+    destino="$2"
+
+    >"$destino"
+
+    while IFS=";" read nombre ap1 ap2 dni
+    do
+        iniciales=$(echo "$nombre" | awk '{for(i=1;i<=NF;i++) printf substr($i,1,1)}')
+
+        apellido1=$(echo "$ap1" | cut -c1-3)
+        apellido2=$(echo "$ap2" | cut -c1-3)
+
+        ult_dni=$(echo "$dni" | tail -c 4)
+
+        login=$(echo "$iniciales$apellido1$apellido2$ult_dni" | tr '[:upper:]' '[:lower:]')
+
+        echo "$login" >> "$destino"
+
+    done < "$origen"
+}
+
+f_generar_logins_universal "$1" "$2"
+---------------------------------------------------------
+
