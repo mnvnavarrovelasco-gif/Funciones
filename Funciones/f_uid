@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-#Autor: 
-#Descripción: 
-#Versión: 
+#Descripción: Muestra la id del usuario actual 
+#Entrada: Ninguna.
+#Salida la UID.
 
 f_uid() {
     echo $(id -u)
