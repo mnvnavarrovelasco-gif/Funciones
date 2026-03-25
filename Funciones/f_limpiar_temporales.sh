@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+
+#Autor:María Navarro Velasco
 #Descripción: Borra archivos antiguos en un directorio específico.
 # Entrada:
  # $1: Ruta del directorio.
