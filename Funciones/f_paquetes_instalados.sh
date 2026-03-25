@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+#Autor:María Navarro Velasco
 #Descripción: Indica si un paquete está instalado o no.
 #Entrada: Paquete.
 #Salida: 1 si no está, 0 si lo encuentra.
