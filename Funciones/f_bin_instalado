@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-#Autor: 
-#Descripción: 
-#Versión: 
+#Autor: María Navarro Velasco
+#Descripción: COmprueba si un binario está instalado.
+#Entrada: el binario.
+#Salida: 0 si está, 1 si no.
 
 
 f_bin_instalado() { 
