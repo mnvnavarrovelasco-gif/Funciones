@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-#Nombre:
-#Versión:
-#Descripción:
+#Descripción: Muestra si hay conexión.
+#ENtrada: Ninguna.
+#Salida: 0 si hay, 1 si no.
 
 
 f_hay_conexion()
