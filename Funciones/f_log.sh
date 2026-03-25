@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-#Autor:
+
+#Autor:María Navarro Velasco
 #Descripción: Registra un evento en un archivo de log cronológico.
 #Entrada: Mensaje de texto a registrar.
 #Salida: Si se ha registrado o no.
