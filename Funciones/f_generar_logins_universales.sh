@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-# Descripción: Genera identificadores en minúsculas procesando nombres y apellidos. Compatible con /bin>
-# Entrada: $1: Fichero origen (CSV delimitado por ;).  $2: Fichero destino
-# Salida: 
+# Autor: María Navarro Velasco
+# Descripción: Genera identificadores en minúsculas procesando nombres y apellidos.
+# Entrada: Fichero origen (CSV delimitado por ;) Fichero destino
+# Salida: Ninguna
 
 function f_generar_logins_universal() {
 
