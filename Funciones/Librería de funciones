@@ -379,6 +379,7 @@ f_borrar_duplicados $1 $2
 GENERAR LOGINS UNIVERSALES
 #!/usr/bin/env bash
 
+#Autor: María Navarro Velasco
 # Descripción: Genera identificadores en minúsculas procesando nombres y apellidos. Compatible con /bin>
 # Entrada: $1: Fichero origen (CSV delimitado por ;).  $2: Fichero destino
 # Salida: 
