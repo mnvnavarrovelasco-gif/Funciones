@@ -255,7 +255,7 @@ f_puerto_abierto $1 $2
 ES IP VÁLIDA
 #!/usr/bin/env bash
 
-#Autor: Dani Ortiz Pinto
+#Autor: Daniel Ortiz Pinto
 #Descripción: Valida sintácticamente si una cadena tiene formato de IPv4.
 #Entrada: Cadena de texto a validar.
 #Salida: Si el formato de IP correcto o inválido (imprime error por stderr).
